@@ -1,0 +1,2 @@
+1. INSERT INTO blogs (author, url, title, likes) VALUES ('Or Rosman', 'test.example', 'test blog', 42);
+2. INSERT INTO blogs (author, url, title, likes) VALUES ('yoyo', 'test2.example', 'test2 blog', 10);
