@@ -13,7 +13,7 @@ router.get('/', async (req, res, next) => {
 router.post('/', async (req, res, next) => {
 	try {
 		const blog = req.body;
-		const response = await Blog.build(blog).save();
+		const response = await Blog.build({ ...blog, userId: req.userId }).save();
 		res.json(response);
 	} catch (error) {
 		next(error);

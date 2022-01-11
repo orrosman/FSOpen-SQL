@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const { User } = require('../models');
-const { encryptPassword, decryptPassword } = require('../utils/user');
+const { encryptPassword } = require('../utils/user');
 
 router.post('/', async (req, res, next) => {
 	try {
