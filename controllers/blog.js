@@ -37,8 +37,14 @@ router.put('/:id', async (req, res, next) => {
 router.delete('/:id', async (req, res, next) => {
 	try {
 		const blogID = req.params.id;
-		const response = await Blog.destroy({ where: { id: blogID } });
-		res.json(response);
+		const blog = await Blog.findOne({ id: blogID });
+
+		if (blog.userId === req.userId) {
+			const response = await Blog.destroy({ where: { id: blogID } });
+			res.json(response);
+		} else {
+			res.status(403).json("You can't delete a blog that is not yours");
+		}
 	} catch (error) {
 		next(error);
 	}
