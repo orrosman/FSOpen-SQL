@@ -1,22 +1,26 @@
 const router = require('express').Router();
 const { Blog } = require('../models');
 
-router.get('/', async (req, res) => {
-	const blogs = await Blog.findAll();
-	res.json(blogs);
+router.get('/', async (req, res, next) => {
+	try {
+		const blogs = await Blog.findAll();
+		res.json(blogs);
+	} catch (error) {
+		next(error);
+	}
 });
 
-router.post('/', async (req, res) => {
+router.post('/', async (req, res, next) => {
 	try {
 		const blog = req.body;
 		const response = await Blog.build(blog).save();
 		res.json(response);
 	} catch (error) {
-		return res.status(400).json({ error });
+		next(error);
 	}
 });
 
-router.put('/:id', async (req, res) => {
+router.put('/:id', async (req, res, next) => {
 	try {
 		const blogID = req.params.id;
 		const { likes } = req.body;
@@ -26,17 +30,17 @@ router.put('/:id', async (req, res) => {
 		);
 		res.json(response);
 	} catch (error) {
-		return res.status(400).json({ error });
+		next(error);
 	}
 });
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', async (req, res, next) => {
 	try {
 		const blogID = req.params.id;
 		const response = await Blog.destroy({ where: { id: blogID } });
 		res.json(response);
 	} catch (error) {
-		return res.status(400).json({ error });
+		next(error);
 	}
 });
 
