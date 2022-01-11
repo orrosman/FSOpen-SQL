@@ -13,7 +13,7 @@ router.post('/', async (req, res, next) => {
 		const response = await User.build(user).save();
 		res.json(response);
 	} catch (error) {
-		next(error);
+		next({ error: error.message });
 	}
 });
 
@@ -22,7 +22,7 @@ router.get('/', async (req, res, next) => {
 		const users = await User.findAll();
 		res.json(users);
 	} catch (error) {
-		next(error);
+		next({ error: error.message });
 	}
 });
 
@@ -36,7 +36,7 @@ router.put('/:username', async (req, res, next) => {
 		);
 		res.json(response);
 	} catch (error) {
-		next(error);
+		next({ error: error.message });
 	}
 });
 
