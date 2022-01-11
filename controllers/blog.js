@@ -1,11 +1,6 @@
 const router = require('express').Router();
 const { Blog } = require('../models');
 
-router.get('/:id', async (req, res) => {
-	const blogs = await Blog.findAll();
-	res.json(blogs);
-});
-
 router.get('/', async (req, res) => {
 	const blogs = await Blog.findAll();
 	res.json(blogs);
@@ -23,7 +18,6 @@ router.post('/', async (req, res) => {
 
 router.delete('/:id', async (req, res) => {
 	try {
-		console.log(req.blog);
 		const blogID = req.params.id;
 		const response = await Blog.destroy({ where: { id: blogID } });
 		res.json(response);
