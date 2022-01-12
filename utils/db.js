@@ -9,6 +9,7 @@ const sequelize = new Sequelize(DATABASE_URL, {
 		},
 	},
 	query: { raw: true },
+	logging: false,
 });
 
 const connectToDatabase = async () => {
