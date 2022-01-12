@@ -1,8 +1,10 @@
 const router = require('express').Router();
 const { Blog, User } = require('../models');
+const { Op } = require('sequelize');
 
 router.get('/', async (req, res, next) => {
 	try {
+		const searchQuery = req.query.search;
 		const blogs = await Blog.findAll({
 			include: {
 				model: User,
@@ -10,6 +12,11 @@ router.get('/', async (req, res, next) => {
 			},
 			nest: true,
 			raw: true,
+			where: {
+				title: {
+					[Op.substring]: searchQuery ? searchQuery : '',
+				},
+			},
 		});
 		res.json(blogs);
 	} catch (error) {
