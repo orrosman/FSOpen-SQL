@@ -3,7 +3,9 @@ const { Blog } = require('../models');
 
 router.get('/', async (req, res, next) => {
 	try {
-		const blogs = await Blog.findAll();
+		const blogs = await Blog.findAll({
+			attributes: { exclude: ['userId'] },
+		});
 		res.json(blogs);
 	} catch (error) {
 		next(error);
@@ -13,7 +15,10 @@ router.get('/', async (req, res, next) => {
 router.post('/', async (req, res, next) => {
 	try {
 		const blog = req.body;
-		const response = await Blog.build({ ...blog, userId: req.userId }).save();
+		const response = await Blog.build({
+			...blog,
+			userId: req.user.id,
+		}).save();
 		res.json(response);
 	} catch (error) {
 		next(error);
@@ -39,7 +44,7 @@ router.delete('/:id', async (req, res, next) => {
 		const blogID = req.params.id;
 		const blog = await Blog.findOne({ id: blogID });
 
-		if (blog.userId === req.userId) {
+		if (blog.userId === req.user.id) {
 			const response = await Blog.destroy({ where: { id: blogID } });
 			res.json(response);
 		} else {

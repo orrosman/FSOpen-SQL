@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { User } = require('../models');
+const { User, Blog } = require('../models');
 const { encryptPassword } = require('../utils/user');
 
 router.post('/', async (req, res, next) => {
@@ -19,7 +19,13 @@ router.post('/', async (req, res, next) => {
 
 router.get('/', async (req, res, next) => {
 	try {
-		const users = await User.findAll();
+		const users = await User.findAll({
+			include: {
+				model: Blog,
+			},
+			nest: true,
+			raw: true,
+		});
 		res.json(users);
 	} catch (error) {
 		next({ error: error.message });
