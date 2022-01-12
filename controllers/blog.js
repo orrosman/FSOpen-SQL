@@ -13,8 +13,13 @@ router.get('/', async (req, res, next) => {
 			nest: true,
 			raw: true,
 			where: {
-				title: {
-					[Op.substring]: searchQuery ? searchQuery : '',
+				[Op.or]: {
+					title: {
+						[Op.substring]: searchQuery ? searchQuery : '',
+					},
+					author: {
+						[Op.substring]: searchQuery ? searchQuery : '',
+					},
 				},
 			},
 		});
