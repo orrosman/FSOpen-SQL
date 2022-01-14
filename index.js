@@ -21,6 +21,11 @@ app.use('/api/authors', authorRouter);
 
 app.use(blogsMiddleware);
 
-app.listen(PORT, () => {
-	console.log(`Server running on ${PORT}`);
-});
+const start = async () => {
+	await connectToDatabase();
+	app.listen(PORT, () => {
+		console.log(`Server running on ${PORT}`);
+	});
+};
+
+start();

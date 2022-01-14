@@ -12,7 +12,7 @@ Blog.init(
 		},
 		author: {
 			type: DataTypes.TEXT,
-			allowNull: true,
+			allowNull: false,
 		},
 		url: {
 			type: DataTypes.TEXT,
@@ -30,7 +30,7 @@ Blog.init(
 	{
 		sequelize,
 		underscored: true,
-		timestamps: false,
+		timestamps: true,
 		modelName: 'blog',
 	}
 );
